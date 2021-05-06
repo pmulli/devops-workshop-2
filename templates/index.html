@@ -9,17 +9,17 @@
     <title>All Buses</title>
 </head>
 <body>
-    <table>
+    <table class="table">
         <tr>
-            <th>Bus Stop</thead>
-            <th>Bus Line</thead>
-            <th>Direction</thead>
-            <th>Expected Time Of Departure</thead>
+            <th scope="col">Bus Stop</thead>
+            <th scope="col">Bus Line</thead>
+            <th scope="col">Direction</thead>
+            <th scope="col">Expected Time Of Departure</thead>
         </tr>
         {% for bus in upcomingBuses %}
             <tr>
+                <td scope="row">{{ bus.lineNumber }}</td>
                 <td>{{ bus.busStop }}</td>
-                <td>{{ bus.lineNumber }}</td>
                 <td>{{ bus.direction }}</td>
                 <td>{{ bus.expectedDepartureTime }}</td>
             </tr>
