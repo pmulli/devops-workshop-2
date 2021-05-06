@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Films</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Film</thead>
+            <th>Stars</thead>
+        </tr>
+        {% for film in film_rows %}
+            <tr>
+                <td>{{ film.title }}</td>
+                <td>{{ film.rating }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
