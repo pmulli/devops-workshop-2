@@ -12,25 +12,29 @@ def getAtcoCodes(postcode):
     #assert postcode == 'NW51TL'
     url = 'http://api.postcodes.io/postcodes/' + postcode
     resp = get(url).json()
-    longitude = resp.get('result').get('longitude')
-    latitude = resp.get('result').get('latitude')
-    print(longitude)
-    print(latitude)
- 
-    url = 'http://transportapi.com/v3/uk/places.json'
-    codes_response = get(url, params={ 'app_id':app_id,  'app_key' : key, 'lat' : latitude, 'lon' : longitude, 'type' : 'bus_stop'})
-    bus_stop_list = codes_response.json().get('member')
-    bus_stop_list.sort(key=extract_distance, reverse=False)
-
-    bus_stop1 = bus_stop_list[0].get('atcocode')
-    bus_stop2 = bus_stop_list[1].get('atcocode')
-    bus_stop1_dist = bus_stop_list[0].get('distance')
-    bus_stop2_dist = bus_stop_list[1].get('distance')
-
-    print(bus_stop1 + " - " + str(bus_stop1_dist))
-    print(bus_stop2 + " - " + str(bus_stop2_dist))
+    bus_stops = []
+    if resp.get('result') != None:
+        longitude = resp.get('result').get('longitude')
+        latitude = resp.get('result').get('latitude')
+        print(longitude)
+        print(latitude)
     
-    return [bus_stop1,bus_stop2]
+        url = 'http://transportapi.com/v3/uk/places.json'
+        codes_response = get(url, params={ 'app_id':app_id,  'app_key' : key, 'lat' : latitude, 'lon' : longitude, 'type' : 'bus_stop'})
+        bus_stop_list = codes_response.json().get('member')
+        bus_stop_list.sort(key=extract_distance, reverse=False)
+
+        bus_stop1 = bus_stop_list[0].get('atcocode')
+        bus_stop2 = bus_stop_list[1].get('atcocode')
+        bus_stop1_dist = bus_stop_list[0].get('distance')
+        bus_stop2_dist = bus_stop_list[1].get('distance')
+
+        print(bus_stop1 + " - " + str(bus_stop1_dist))
+        print(bus_stop2 + " - " + str(bus_stop2_dist))
+
+        bus_stops = [bus_stop1,bus_stop2]
+    
+    return bus_stops
 
 def extract_distance(json):
     try:
