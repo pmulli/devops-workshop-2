@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="60">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <title>All Buses</title>
 </head>
 <body>
+    <form name="findbuses" action = "/" method = "post">
+        <p>Find nearest buses for postcode:</p>
+        <p><input type="text" name="postcode" value="{{ postcode }}" /></p>
+        <p><input type="submit" value="submit" /></p>
+     </form>
+     <script>
+      window.onload=function(){ 
+        window.setTimeout(function() { document.findbuses.submit(); }, 20000);
+      };
+     </script>
     <table class="table">
         <tr>
             <th scope="col">Bus Stop</thead>

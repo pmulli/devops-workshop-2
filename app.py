@@ -9,7 +9,7 @@ key = "403767acba3af3e7dadf1121586b5f8d"
 app_id = "00d644e1"
 
 def getAtcoCodes(postcode):
-    assert postcode == 'NW51TL'
+    #assert postcode == 'NW51TL'
     url = 'http://api.postcodes.io/postcodes/' + postcode
     resp = get(url).json()
     longitude = resp.get('result').get('longitude')
@@ -56,13 +56,17 @@ def listSort(e):
     return e['expectedDepartureTime']
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def display_bus_info():
+    postcode = request.form.get('postcode')
+    if postcode == None:
+        postcode = 'NW51TL'
+    print('postcode: ' + postcode)
     resp = []
-    for code in getAtcoCodes('NW51TL'):
+    for code in getAtcoCodes(postcode):
         url = 'http://transportapi.com/v3/uk/bus/stop/' + code + '/live.json'
         print(url)
         busResponse = get(url, params={ 'app_id':app_id,  'app_key' : key})
         resp += parseResponse(busResponse.json())
     resp.sort(key=listSort)
-    return render_template('index.html', upcomingBuses=resp, timeStamp=datetime.datetime.now())
+    return render_template('index.html', postcode=postcode, upcomingBuses=resp, timeStamp=datetime.datetime.now())
